@@ -6,12 +6,10 @@ const passport = require("passport");
 const config = require("./config");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 
 const app = express();
 
 const mongoose = require("mongoose");
-const campsiteRouter = require("./routes/campsiteRouter");
 
 const url = config.mongoUrl;
 const connect = mongoose.connect(url, {
@@ -37,11 +35,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use("/campsites", campsiteRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));
