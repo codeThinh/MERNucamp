@@ -7,8 +7,6 @@ const config = require("./config");
 
 const indexRouter = require("./routes/index");
 
-const app = express();
-
 const mongoose = require("mongoose");
 
 const url = config.mongoUrl;
@@ -23,6 +21,23 @@ connect.then(
   () => console.log("Connected correctly to server"),
   (err) => console.log(err)
 );
+
+const app = express();
+
+// Secure traffic only
+app.all("*", (req, res, next) => {
+  if (req.secure) {
+    return next();
+  } else {
+    console.log(
+      `Redirecting to: https://${req.hostname}:${app.get("secPort")}${req.url}`
+    );
+    res.redirect(
+      301,
+      `https://${req.hostname}:${app.get("secPort")}${req.url}`
+    );
+  }
+});
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
