@@ -9,5 +9,6 @@ router.use("/promotions", require("./promotionRouter"));
 router.use("/partners", require("./partnerRouter"));
 router.use("/users", require("./users"));
 router.use("/imageUpload", require("./uploadRouter"));
+router.use("/favorites", require("./favoriteRouter"));
 
 module.exports = router;
